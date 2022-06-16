@@ -1,0 +1,66 @@
+﻿@model BelajaraJoinTable.Models.Siswa
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Siswa</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nama)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nama)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.JenisKelamin)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.JenisKelamin)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TanggalLahir)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TanggalLahir)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TinggiBadan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TinggiBadan)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NomorHandphone)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NomorHandphone)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Alamat)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Alamat)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.GolonganDarah)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GolonganDarah)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Hobi)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Hobi)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdSiswa">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
