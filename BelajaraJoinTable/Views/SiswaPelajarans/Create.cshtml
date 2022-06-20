@@ -1,13 +1,14 @@
-﻿@model BelajaraJoinTable.Models.SiswaPelajaran
+﻿@*@model BelajaraJoinTable.Models.SiswaPelajaran*@
+
+@model BelajaraJoinTable.ViewModel.SiswaPelajaranVM
 
 @{
     ViewData["Title"] = "Create";
 }
 
 <h1>SiswaPelajaran</h1>
-<hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6 offset-md-3">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -26,7 +27,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-secendary">View All</a>
 </div>
 
 @section Scripts {

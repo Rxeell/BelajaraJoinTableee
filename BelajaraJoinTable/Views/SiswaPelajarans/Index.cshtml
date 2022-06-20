@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<BelajaraJoinTable.Models.SiswaPelajaran>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Siswapel";
 }
 
-<h1>SiswaPelajaran</h1>
+<h1>Siswapel</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -25,10 +25,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Siswa.Alamat)
+                @Html.DisplayFor(modelItem => item.Siswa.Nama)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Pelajaran.IdPelajaran)
+                @Html.DisplayFor(modelItem => item.Pelajaran.NamaPelajaran)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdSiswaPelajaran">Edit</a> |
