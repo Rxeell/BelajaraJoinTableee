@@ -5,6 +5,10 @@ namespace BelajaraJoinTable.Context
 {
     public class SispelDbContext : DbContext
     {
+        public SispelDbContext()
+        {
+        }
+
         public SispelDbContext(DbContextOptions<SispelDbContext> options) : base(options)
         { }
 

@@ -4,34 +4,91 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BelajaraJoinTable.Repository
 {
-    public class IUserRepository<T> : IGenericRepository<user>
+    public class IUserRepository
     {
-        private readonly SispelDbContext context;
+        private SispelDbContext context;
 
-        public DbSet<T> dbSet;
-        public async Task<IEnumerable<SiswaPelajaran>> All()
+        public IUserRepository(SispelDbContext context)
         {
-            return await context.SiswaPelajaran.
+            this.context = context;
         }
 
-        public Task<SiswaPelajaran> GetById(int id)
+        public IEnumerable<SiswaPelajaran> GetStudents()
         {
-            throw new NotImplementedException();
+            return context.SiswaPelajaran.ToList();
         }
 
-        public Task<SiswaPelajaran> Insert(SispelDbContext entity)
+        public SiswaPelajaran GetSiswaByID(int id)
         {
-            throw new NotImplementedException();
+            return context.SiswaPelajaran.Find(id);
         }
 
-        public Task Delete(int id)
+        public void InsertStudent(SiswaPelajaran siswa)
         {
-            throw new NotImplementedException();
+            context.SiswaPelajaran.Add(siswa);
         }
 
-        public Task Save()
+        public void DeleteStudent(int SiswaID)
         {
-            throw new NotImplementedException();
+            SiswaPelajaran siswa = context.SiswaPelajaran.Find(SiswaID);
+            context.SiswaPelajaran.Remove(SiswaPelajaran);
+        }
+
+        public void UpdateStudent(SiswaPelajaran siswa)
+        {
+            context.Entry(SiswaPelajaran).State = EntityState.Modified;
+        }
+
+        public void Save()
+        {
+            context.SaveChanges();
+        }
+
+        private bool disposed = false;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    context.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
+
+//        Siswa IGenericRepository.GetStudentByID(int siswa)
+//        {
+//            throw new NotImplementedException();
+//        }
+
+//        public void UpdateStudent(SiswaPelajaran siswa)
+//        {
+//            throw new NotImplementedException();
+//        }
+
+//        public void Insert(SiswaPelajaran siswa)
+//        {
+//            throw new NotImplementedException();
+//        }
+
+//        public void Delete(int siswaID)
+//        {
+//            throw new NotImplementedException();
+//        }
+
+//        public void Update(SiswaPelajaran siswa)
+//        {
+//            throw new NotImplementedException();
+//        }
+//    }
+//}

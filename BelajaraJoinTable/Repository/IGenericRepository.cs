@@ -1,14 +1,14 @@
-﻿namespace BelajaraJoinTable.Repository
-{
-    public interface IGenericRepository<T> where T : class
-    {
+﻿using BelajaraJoinTable.Models;
 
-    //    Task <IEnumerable<T>> All();
-    //    Task<T> GetById(Guid id);
-    //    Task<bool> Add(T entity);
-    //    Task <bool>Insert(Guid id);
-    //    Task <bool> Delete(Guid id);
-        
-    //    Task save();
-    //}
+namespace BelajaraJoinTable.Repository
+{
+    public interface IGenericRepository : IDisposable
+    {
+        IEnumerable<SiswaPelajaran> GetStudents();
+        Siswa GetStudentByID(int siswa);
+        void Insert(SiswaPelajaran siswa);
+        void Delete(int siswaID);
+        void Update(SiswaPelajaran siswa);
+        void Save();
+    }
 }
