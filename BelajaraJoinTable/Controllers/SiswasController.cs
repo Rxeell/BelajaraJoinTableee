@@ -13,7 +13,7 @@ public class SiswasController : Controller
 {
     //private readonly SispelDbContext _context;
     private readonly ISiswaRepository _siswaRepository;
-    public SiswasController(/*SispelDbContext context,*/ SiswaRepository siswaRepository)
+    public SiswasController(ISiswaRepository siswaRepository)
     {
         //_context = context;
         _siswaRepository = siswaRepository;

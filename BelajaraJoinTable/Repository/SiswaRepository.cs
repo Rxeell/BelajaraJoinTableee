@@ -1,6 +1,8 @@
 ﻿using BelajaraJoinTable.Context;
 using BelajaraJoinTable.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BelajaraJoinTable.Repository
 {
@@ -36,5 +38,6 @@ namespace BelajaraJoinTable.Repository
             _context.Siswa.Remove(siswa);
             await _context.SaveChangesAsync();
         }
+
     }
 }

@@ -7,36 +7,45 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BelajaraJoinTable.Context;
 using BelajaraJoinTable.Models;
+using BelajaraJoinTable.Repository;
 
 namespace BelajaraJoinTable.Controllers
 {
     public class PelajaransController : Controller
     {
-        private readonly SispelDbContext _context;
+        //private readonly SispelDbContext _context;
+        private readonly IPelajaranRepository _pelajaranRepository;
 
-        public PelajaransController(SispelDbContext context)
+        public PelajaransController(/*SispelDbContext context*/ IPelajaranRepository pelajaranRepository)
         {
-            _context = context;
+            //_context = context;
+            _pelajaranRepository = pelajaranRepository;
         }
 
         // GET: Pelajarans
         public async Task<IActionResult> Index()
         {
-              return _context.Pelajaran != null ? 
-                          View(await _context.Pelajaran.ToListAsync()) :
-                          Problem("Entity set 'SispelDbContext.Pelajaran'  is null.");
+            List<Pelajaran> pelajaran = new List<Pelajaran>();
+            pelajaran = await _pelajaranRepository.GetAll();
+            return View(pelajaran);
+              //return _context.Pelajaran != null ? 
+              //            View(await _context.Pelajaran.ToListAsync()) :
+              //            Problem("Entity set 'SispelDbContext.Pelajaran'  is null.");
         }
 
         // GET: Pelajarans/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Pelajaran == null)
-            {
-                return NotFound();
-            }
+            //if (id == null || _context.Pelajaran == null)
+            //{
+            //    return NotFound();
+            //}
 
-            var pelajaran = await _context.Pelajaran
-                .FirstOrDefaultAsync(m => m.IdPelajaran == id);
+            //var pelajaran = await _context.Pelajaran
+            //    .FirstOrDefaultAsync(m => m.IdPelajaran == id);
+
+            var pelajaran = await _pelajaranRepository.FindByID(id);
+
             if (pelajaran == null)
             {
                 return NotFound();
@@ -58,11 +67,15 @@ namespace BelajaraJoinTable.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("IdPelajaran,NamaPelajaran")] Pelajaran pelajaran)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            //    _context.Add(pelajaran);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            if (!ModelState.IsValid)
             {
-                _context.Add(pelajaran);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                await _pelajaranRepository.Save(pelajaran);
             }
             return View(pelajaran);
         }
@@ -70,12 +83,13 @@ namespace BelajaraJoinTable.Controllers
         // GET: Pelajarans/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Pelajaran == null)
-            {
-                return NotFound();
-            }
+            //if (id == null || _context.Pelajaran == null)
+            //{
+            //    return NotFound();
+            //}
 
-            var pelajaran = await _context.Pelajaran.FindAsync(id);
+            //var pelajaran = await _context.Pelajaran.FindAsync(id);
+            var pelajaran = await _pelajaranRepository.FindByID(id);
             if (pelajaran == null)
             {
                 return NotFound();
@@ -99,8 +113,9 @@ namespace BelajaraJoinTable.Controllers
             {
                 try
                 {
-                    _context.Update(pelajaran);
-                    await _context.SaveChangesAsync();
+                    await _pelajaranRepository.Update(id, pelajaran);
+                    //_context.Update(pelajaran);
+                    //await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -121,13 +136,14 @@ namespace BelajaraJoinTable.Controllers
         // GET: Pelajarans/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Pelajaran == null)
-            {
-                return NotFound();
-            }
+            //if (id == null || _context.Pelajaran == null)
+            //{
+            //    return NotFound();
+            //}
 
-            var pelajaran = await _context.Pelajaran
-                .FirstOrDefaultAsync(m => m.IdPelajaran == id);
+            //var pelajaran = await _context.Pelajaran
+            //    .FirstOrDefaultAsync(m => m.IdPelajaran == id);
+            var pelajaran = await _pelajaranRepository.FindByID(id);
             if (pelajaran == null)
             {
                 return NotFound();
@@ -141,23 +157,28 @@ namespace BelajaraJoinTable.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Pelajaran == null)
-            {
-                return Problem("Entity set 'SispelDbContext.Pelajaran'  is null.");
-            }
-            var pelajaran = await _context.Pelajaran.FindAsync(id);
+            //if (_context.Pelajaran == null)
+            //{
+            //    return Problem("Entity set 'SispelDbContext.Pelajaran'  is null.");
+            //}
+            var pelajaran = await _pelajaranRepository.FindByID(id);
             if (pelajaran != null)
             {
-                _context.Pelajaran.Remove(pelajaran);
+                //_context.Pelajaran.Remove(pelajaran);
+                await _pelajaranRepository.Delete(pelajaran);
             }
-            
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PelajaranExists(int id)
         {
-          return (_context.Pelajaran?.Any(e => e.IdPelajaran == id)).GetValueOrDefault();
+          //return (_context.Pelajaran?.Any(e => e.IdPelajaran == id)).GetValueOrDefault();
+          var pelajaran = _pelajaranRepository.FindByID(id);
+            if (pelajaran != null)
+            { return true; }
+            else
+            { return false; }
         }
     }
 }

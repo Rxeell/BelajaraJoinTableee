@@ -7,8 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="obj\**" />
+    <Compile Remove="Repository\Siswa\**" />
+    <Content Remove="obj\**" />
+    <Content Remove="Repository\Siswa\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <EmbeddedResource Remove="Repository\Siswa\**" />
+    <None Remove="obj\**" />
+    <None Remove="Repository\Siswa\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Repository\IGenericRepository.cs" />
+    <Compile Remove="Repository\ISiswaPelajaranRepository.cs" />
     <Compile Remove="Repository\IUserRepository.cs" />
+    <Compile Remove="Repository\SiswaPelajaranRepository.cs" />
   </ItemGroup>
 
   <ItemGroup>

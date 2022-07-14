@@ -1,14 +1,22 @@
 using BelajaraJoinTable.Context;
+using BelajaraJoinTable.Repository;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
 //DI for DbContext
+builder.Services.AddScoped<ISiswaRepository, SiswaRepository>();
+builder.Services.AddScoped<IPelajaranRepository, PelajaranRepository>();
 builder.Services.AddDbContext<SispelDbContext>(options=>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
+
+
 
 var app = builder.Build();
 

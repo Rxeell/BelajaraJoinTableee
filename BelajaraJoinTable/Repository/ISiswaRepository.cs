@@ -1,4 +1,6 @@
 ﻿using BelajaraJoinTable.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BelajaraJoinTable.Repository
 {
@@ -13,6 +15,5 @@ namespace BelajaraJoinTable.Repository
         Task Update(int id, Siswa siswa);
 
         Task Delete(Siswa siswa);
-
     }
 }
