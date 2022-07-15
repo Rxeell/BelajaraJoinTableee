@@ -19,9 +19,7 @@
 
   <ItemGroup>
     <Compile Remove="Repository\IGenericRepository.cs" />
-    <Compile Remove="Repository\ISiswaPelajaranRepository.cs" />
     <Compile Remove="Repository\IUserRepository.cs" />
-    <Compile Remove="Repository\SiswaPelajaranRepository.cs" />
   </ItemGroup>
 
   <ItemGroup>
