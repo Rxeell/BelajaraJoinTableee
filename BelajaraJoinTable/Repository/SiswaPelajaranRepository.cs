@@ -21,25 +21,25 @@ namespace BelajaraJoinTable.Repository
             return await _context.SiswaPelajaran
             .FirstOrDefaultAsync(m => m.IdSiswaPelajaran == id);
         }
-        public async Task Save(SiswaPelajaran siswaPelajaran)
+        public async Task Save(SiswaPelajaran siswapelajaran)
         {
-            await _context.AddAsync(siswaPelajaran);
+            await _context.AddAsync(siswapelajaran);
             await _context.SaveChangesAsync();
         }
-        public async Task Update(int id, SiswaPelajaran siswaPelajaran)
+        public async Task Update(int id, SiswaPelajaran siswapelajaran)
         {
-            _context.Update(siswaPelajaran);
+            _context.Update(siswapelajaran);
             await _context.SaveChangesAsync();
         }
-        public async Task Delete(SiswaPelajaran siswaPelajaran)
+        public async Task Delete(SiswaPelajaran siswapelajaran)
         {
-            _context.SiswaPelajaran.Remove(siswaPelajaran);
+            _context.SiswaPelajaran.Remove(siswapelajaran);
             await _context.SaveChangesAsync();
         }
 
-        Task ISiswaPelajaranRepository.FindByID(int? id)
-        {
-            throw new NotImplementedException();
-        }
+        //Task ISiswaPelajaranRepository.FindByID(int? id)
+        //{
+        //    throw new NotImplementedException();
+        
     }
 }

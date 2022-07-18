@@ -13,6 +13,7 @@ builder.Services.AddControllersWithViews();
 //DI for DbContext
 builder.Services.AddScoped<ISiswaRepository, SiswaRepository>();
 builder.Services.AddScoped<IPelajaranRepository, PelajaranRepository>();
+builder.Services.AddScoped<ISiswaPelajaranRepository, SiswaPelajaranRepository>();
 builder.Services.AddDbContext<SispelDbContext>(options=>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnection")));
 
