@@ -6,6 +6,8 @@ namespace BelajaraJoinTable.Repository
     {
         Task<List<SiswaPelajaran>> GetAll();
 
+        Task<List<SiswaPelajaran>> IniBaru();
+
         Task<SiswaPelajaran> FindByID(int? id);
 
         Task Save(SiswaPelajaran siswaPelajaran);

@@ -26,7 +26,7 @@ namespace BelajaraJoinTable.Controllers
         public async Task<IActionResult> Index()
         {
             List<SiswaPelajaran> siswapelajaran = new List<SiswaPelajaran>();
-            siswapelajaran = await _siswapelajaranRepository.GetAll();
+            siswapelajaran = await _siswapelajaranRepository.IniBaru();
             return View(siswapelajaran);
             //var sispelDbContext = _context.SiswaPelajaran.Include(s => s.Pelajaran).Include(s => s.Siswa);
             //return View(await sispelDbContext.ToListAsync());
@@ -100,6 +100,29 @@ namespace BelajaraJoinTable.Controllers
             return View(siswapelajaran);
         }
 
+
+        // GET: SiswaPelajarans/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null || _context.SiswaPelajaran == null)
+            {
+                return NotFound();
+            }
+
+            var siswaPelajaran = await _context.SiswaPelajaran.FindAsync(id);
+            if (siswaPelajaran == null)
+            {
+                return NotFound();
+            }
+            var vm = new EditSiswaPelajaranVM();
+            vm.IdPelajaran = siswaPelajaran.IdPelajaran;
+            vm.IdSiswa = siswaPelajaran.IdSiswa;
+            vm.IdSiswaPelajaran = siswaPelajaran.IdSiswaPelajaran;
+
+            ViewData["IdPelajaran"] = new SelectList(_context.Pelajaran, "IdPelajaran", "NamaPelajaran", siswaPelajaran.IdPelajaran);
+            ViewData["IdSiswa"] = new SelectList(_context.Siswa, "IdSiswa", "Nama", siswaPelajaran.IdSiswa);
+            return View(vm);
+        }
         // GET: SiswaPelajarans/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

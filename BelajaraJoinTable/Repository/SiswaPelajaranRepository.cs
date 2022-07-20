@@ -16,6 +16,13 @@ namespace BelajaraJoinTable.Repository
         {
             return await _context.SiswaPelajaran.ToListAsync();
         }
+        public async Task<List<SiswaPelajaran>> IniBaru()
+        {
+            var sispelDbContext = _context.SiswaPelajaran.Include(s => s.Pelajaran).Include(s => s.Siswa);
+
+            var test = await sispelDbContext.ToListAsync();
+            return test;
+        }
         public async Task<SiswaPelajaran> FindByID(int? id)
         {
             return await _context.SiswaPelajaran

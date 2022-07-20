@@ -16,7 +16,8 @@ namespace BelajaraJoinTable.Repository
         }
         public async Task<List<Siswa>> GetAll()
         {
-            return await _context.Siswa.ToListAsync();
+            var test = await _context.Siswa.ToListAsync();
+            return test;
         }
         public async Task<Siswa> FindByID(int? id)
         {
