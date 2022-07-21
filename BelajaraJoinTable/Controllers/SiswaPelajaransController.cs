@@ -44,21 +44,21 @@ namespace BelajaraJoinTable.Controllers
             //    .Include(s => s.Pelajaran)
             //    .Include(s => s.Siswa)
             //    .FirstOrDefaultAsync(m => m.IdSiswaPelajaran == id);
-            var siswaPelajaran = await _siswapelajaranRepository.FindByID(id);
+            var siswapelajaran = await _siswapelajaranRepository.FindByID(id);
 
-            if (siswaPelajaran == null)
+            if (siswapelajaran == null)
             {
                 return NotFound();
             }
 
-            return View(siswaPelajaran);
+            return View(siswapelajaran);
         }
 
         // GET: SiswaPelajarans/Create
         public IActionResult Create()
         {
-            //ViewData["IdPelajaran"] = new SelectList(_context.Pelajaran, "IdPelajaran", "NamaPelajaran");
-            //ViewData["IdSiswa"] = new SelectList(_context.Siswa, "IdSiswa", "Nama");
+            ViewData["IdPelajaran"] = new SelectList(_siswapelajaranRepository.Pelajaran, "IdPelajaran", "NamaPelajaran");
+            ViewData["IdSiswa"] = new SelectList(_siswapelajaranRepository.Siswa, "IdSiswa", "Nama");
             return View();
         }
 
@@ -67,66 +67,47 @@ namespace BelajaraJoinTable.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("IdSiswaPelajaran,IdSiswa,IdPelajaran")] SiswaPelajaran siswapelajaran)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(siswaPelajaran);
-        //        await _siswapelajaranRepository.Save(siswapelajaran);
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["IdPelajaran"] = new SelectList(_context.Pelajaran, "IdPelajaran", "NamaPelajaran", siswaPelajaran.IdPelajaran);
-        //    ViewData["IdSiswa"] = new SelectList(_context.Siswa, "IdSiswa", "Alamat", siswaPelajaran.IdSiswa);
-        //    return View(siswapelajaran);
-        //}
+        public async Task<IActionResult> Create([Bind("IdSiswaPelajaran,IdSiswa,IdPelajaran")] SiswaPelajaran siswapelajaran)
+        {
+            //if (ModelState.IsValid)
+            //{
+            //    _context.Add(siswaPelajaran);
+            //    await _siswapelajaranRepository.Save(siswapelajaran);
+            //    return RedirectToAction(nameof(Index));
+            //}
+            if (ModelState.IsValid)
+            {
+                await _siswapelajaranRepository.Save(siswapelajaran);
+            }
+            ViewData["IdPelajaran"] = new SelectList(_siswapelajaranRepository.Pelajaran, "IdPelajaran", "NamaPelajaran", siswapelajaran.IdPelajaran);
+            ViewData["IdSiswa"] = new SelectList(_siswapelajaranRepository.Siswa, "IdSiswa", "Alamat", siswapelajaran.IdSiswa);
+            return View(siswapelajaran);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdSiswaPelajaran,IdSiswa,IdPelajaran")] SiswaPelajaran siswapelajaran)
+        public async Task<IActionResult> Create([Bind("IdSiswaPelajaran,IdSiswa,IdPelajaran")] SiswaPelajaranVM siswaPelajaranVM)
         {
             if (ModelState.IsValid)
             {
                 SiswaPelajaran sp = new SiswaPelajaran();
-                sp.IdPelajaran = siswapelajaran.IdPelajaran;
-                sp.IdSiswa = siswapelajaran.IdSiswa;
+                sp.IdPelajaran = siswaPelajaranVM.IdPelajaran;
+                sp.IdSiswa = siswapelajaranVM.IdSiswa;
 
                 //_context.Add(siswaPelajaranVM);
-                //_context.Add(sp);
-                await _siswapelajaranRepository.Save(siswapelajaran);
-                //return RedirectToAction(nameof(Index));
+                _siswapelajaranRepositoryVM.Add(sp);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-            //ViewData["IdPelajaran"] = new SelectList(_context.Pelajaran, "IdPelajaran", "NamaPelajaran", siswaPelajaranVM.IdPelajaran);
-            //ViewData["IdSiswa"] = new SelectList(_context.Siswa, "IdSiswa", "Nama", siswaPelajaran.IdSiswa);
-            return View(siswapelajaran);
+            ViewData["IdPelajaran"] = new SelectList(_context.Pelajaran, "IdPelajaran", "NamaPelajaran", siswaPelajaranVM.IdPelajaran);
+            ViewData["IdSiswa"] = new SelectList(_context.Siswa, "IdSiswa", "Nama", siswaPelajaranVM.IdSiswa);
+            return View(siswaPelajaranVM);
         }
-
 
         // GET: SiswaPelajarans/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.SiswaPelajaran == null)
-            {
-                return NotFound();
-            }
-
-            var siswaPelajaran = await _context.SiswaPelajaran.FindAsync(id);
-            if (siswaPelajaran == null)
-            {
-                return NotFound();
-            }
-            var vm = new EditSiswaPelajaranVM();
-            vm.IdPelajaran = siswaPelajaran.IdPelajaran;
-            vm.IdSiswa = siswaPelajaran.IdSiswa;
-            vm.IdSiswaPelajaran = siswaPelajaran.IdSiswaPelajaran;
-
-            ViewData["IdPelajaran"] = new SelectList(_context.Pelajaran, "IdPelajaran", "NamaPelajaran", siswaPelajaran.IdPelajaran);
-            ViewData["IdSiswa"] = new SelectList(_context.Siswa, "IdSiswa", "Nama", siswaPelajaran.IdSiswa);
-            return View(vm);
-        }
-        // GET: SiswaPelajarans/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            //if (id == null || _context.SiswaPelajaran == null)
+            //if (id == null || _siswapelajaran.SiswaPelajaran == null)
             //{
             //    return NotFound();
             //}
@@ -136,15 +117,16 @@ namespace BelajaraJoinTable.Controllers
             {
                 return NotFound();
             }
-            //var vm = new EditSiswaPelajaranVM();
-            //vm.IdPelajaran = siswaPelajaran.IdPelajaran;
-            //vm.IdSiswa = siswaPelajaran.IdSiswa;
-            //vm.IdSiswaPelajaran = siswaPelajaran.IdSiswaPelajaran;
+            var vm = new EditSiswaPelajaranVM();
+            vm.IdPelajaran = siswapelajaran.IdPelajaran;
+            vm.IdSiswa = siswapelajaran.IdSiswa;
+            vm.IdSiswaPelajaran = siswapelajaran.IdSiswaPelajaran;
 
-            //ViewData["IdPelajaran"] = new SelectList(_siswapelajaranRepository.Pelajaran, "IdPelajaran", "NamaPelajaran", siswapelajaran.IdPelajaran);
-            //ViewData["IdSiswa"] = new SelectList(_siswapelajaranRepository.Siswa, "IdSiswa", "Nama", siswapelajaran.IdSiswa);
-            return View(siswapelajaran);
+            ViewData["IdPelajaran"] = new SelectList(_context.Pelajaran, "IdPelajaran", "NamaPelajaran", siswapelajaran.IdPelajaran);
+            ViewData["IdSiswa"] = new SelectList(_context.Siswa, "IdSiswa", "Nama", siswapelajaran.IdSiswa);
+            return View(vm);
         }
+
 
         // POST: SiswaPelajarans/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -226,7 +208,7 @@ namespace BelajaraJoinTable.Controllers
 
                 await _siswapelajaranRepository.Delete(siswapelajaran);
             }
-            
+
             //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -237,8 +219,9 @@ namespace BelajaraJoinTable.Controllers
             var siswaPelajaran = _siswapelajaranRepository.FindByID(id);
             if (siswaPelajaran != null)
             { return true; }
-            else 
-            { return false; }  
+            else
+            { return false; }
         }
     }
+    
 }

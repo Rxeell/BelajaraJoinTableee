@@ -1,12 +1,17 @@
 ﻿using BelajaraJoinTable.Context;
 using BelajaraJoinTable.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 
 namespace BelajaraJoinTable.Repository
 {
     public class SiswaPelajaranRepository : ISiswaPelajaranRepository
     {
         private readonly SispelDbContext _context;
+
+        public IEnumerable Pelajaran => throw new NotImplementedException();
+
+        public IEnumerable Siswa => throw new NotImplementedException();
 
         public SiswaPelajaranRepository(SispelDbContext context)
         {
